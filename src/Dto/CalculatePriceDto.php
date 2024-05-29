@@ -1,22 +1,23 @@
 <?php
 
-namespace App\Validator;
+namespace App\Dto;
 
+use App\Validator\CouponExists;
+use App\Validator\ProductExists;
 use Symfony\Component\Validator\Constraints as Assert;
 
 class CalculatePriceDto
 {
     public function __construct(
         #[Assert\GreaterThanOrEqual(1)]
-//        #[Assert\LessThanOrEqual(5)]
+        #[ProductExists]
         public readonly int $product,
 
         #[Assert\NotBlank]
-//        #[Assert\Length(min: 10, max: 500)]
         public readonly string $taxNumber,
 
         #[Assert\NotBlank]
-//        #[Assert\Length(min: 10, max: 500)]
+        #[CouponExists]
         public readonly string $couponCode,
     ) {
     }
