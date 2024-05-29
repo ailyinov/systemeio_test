@@ -7,7 +7,7 @@ use App\Validator\ProductExists;
 use App\Validator\Tax;
 use Symfony\Component\Validator\Constraints as Assert;
 
-class CalculatePriceDto
+class PurchaseDto
 {
     use TaxCountryCodeTrait;
 
@@ -22,8 +22,16 @@ class CalculatePriceDto
 
         #[CouponExists]
         private readonly ?string $couponCode,
+
+        #[Assert\Choice(['paypal', 'stripe'])]
+        private readonly string $paymentProcessor,
     )
     {
+    }
+
+    public function getPaymentProcessor(): string
+    {
+        return $this->paymentProcessor;
     }
 
     public function getProduct(): int

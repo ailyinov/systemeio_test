@@ -14,7 +14,7 @@ class PayloadErrorEventSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents(): array
     {
         return [
-//            ExceptionEvent::class => 'onExceptionEvent'
+            ExceptionEvent::class => 'onExceptionEvent'
         ];
     }
 

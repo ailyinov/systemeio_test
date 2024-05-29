@@ -3,10 +3,9 @@
 namespace App\Controller;
 
 use App\Dto\CalculatePriceDto;
-use App\Entity\Coupon;
+use App\Dto\PurchaseDto;
 use App\Service\PurchaseProcessor;
 use App\Service\PriceCalculator;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpKernel\Attribute\MapRequestPayload;
@@ -23,11 +22,12 @@ class PriceController extends AbstractController
         ]);
     }
 
-//    #[Route('/purchase', name: 'app_price_purchase', methods: ['POST'])]
-//    public function purchase(#[MapRequestPayload] CalculatePriceDto $calculatePriceDto, PurchaseProcessor $purchaseProcessor): JsonResponse
-//    {
-//        return $this->json([
-//            'success' => 'ok'
-//        ]);
-//    }
+    #[Route('/purchase', name: 'app_price_purchase', methods: ['POST'])]
+    public function purchase(#[MapRequestPayload] PurchaseDto $purchaseDto, PurchaseProcessor $purchaseProcessor): JsonResponse
+    {
+        $purchaseProcessor->process($purchaseDto);
+        return $this->json([
+            'success' => 'ok'
+        ]);
+    }
 }
