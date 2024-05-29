@@ -16,12 +16,18 @@ class PriceController extends AbstractController
     #[Route('/calculate-price', name: 'app_price_calc', methods: ['POST'])]
     public function calculate(#[MapRequestPayload] CalculatePriceDto $calculatePriceDto, PriceCalculator $priceCalculator): JsonResponse
     {
-        $priceCalculator->calculate($calculatePriceDto);
+        $price = $priceCalculator->calculate($calculatePriceDto);
         return $this->json([
-            'success' => 'ok'
+            'success' => 'ok',
+            'data' => [
+                'price' => $price,
+            ]
         ]);
     }
 
+    /**
+     * @throws \Exception
+     */
     #[Route('/purchase', name: 'app_price_purchase', methods: ['POST'])]
     public function purchase(#[MapRequestPayload] PurchaseDto $purchaseDto, PurchaseProcessor $purchaseProcessor): JsonResponse
     {

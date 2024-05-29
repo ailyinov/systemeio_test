@@ -34,7 +34,7 @@ class PriceCalculator
 
         $price = $product->getPrice();
         if ($coupon !== null) {
-            $discount = $coupon->getIsPercent() ? $coupon->getDiscount() / $price * 100 : $coupon->getDiscount();
+            $discount = $coupon->getIsPercent() ? $coupon->getDiscount() / 100 * $price: $coupon->getDiscount();
             $price -= $discount;
         }
         $price += $price * ($tax->getPercent() / 100);
