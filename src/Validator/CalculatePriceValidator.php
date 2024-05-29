@@ -9,7 +9,7 @@ class CalculatePriceValidator extends ConstraintValidator
 {
     public function validate($value, Constraint $constraint)
     {
-        /* @var CalculatePrice $constraint */
+        /* @var CalculatePriceDto $constraint */
 
         if (null === $value || '' === $value) {
             return;

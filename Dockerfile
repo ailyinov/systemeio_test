@@ -1,4 +1,10 @@
 FROM php:8.3-cli-alpine as sio_test
+RUN set -ex \
+  && apk --no-cache add \
+    postgresql-dev
+
+RUN docker-php-ext-install pdo pdo_pgsql
+
 RUN apk add --no-cache git zip bash
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
