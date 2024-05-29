@@ -4,9 +4,75 @@ Accept: application/json
 Content-Type: application/json
 
 {
-  "product": 10,
+  "product": 1,
   "taxNumber": "DE123456789",
-  "couponCode": "D15"
+  "couponCode": "F5"
+}
+
+###
+POST http://127.0.0.1:8337/calculate-price
+Accept: application/json
+Content-Type: application/json
+
+{
+  "product": 2,
+  "taxNumber": "DE123456789",
+  "couponCode": "P20"
+}
+
+###
+POST http://127.0.0.1:8337/calculate-price
+Accept: application/json
+Content-Type: application/json
+
+{
+"product": 3,
+"taxNumber": "DE123456789",
+"couponCode": "F10"
+}
+
+### No coupon
+POST http://127.0.0.1:8337/calculate-price
+Accept: application/json
+Content-Type: application/json
+
+{
+  "product": 3,
+  "taxNumber": "DE123456789"
+}
+
+### Invalid tax num
+POST http://127.0.0.1:8337/calculate-price
+Accept: application/json
+Content-Type: application/json
+
+{
+  "product": 3,
+  "taxNumber": "DE4541234567894545",
+  "couponCode": "F10"
+}
+
+### Invalid coupon
+POST http://127.0.0.1:8337/calculate-price
+Accept: application/json
+Content-Type: application/json
+
+{
+"product": 3,
+"taxNumber": "DE4541234567894545",
+"couponCode": "F100"
+}
+
+
+### Invalid product
+POST http://127.0.0.1:8337/calculate-price
+Accept: application/json
+Content-Type: application/json
+
+{
+  "product": 30,
+  "taxNumber": "DE4541234567894545",
+  "couponCode": "F100"
 }
 
 ### Execute Purchase
@@ -17,6 +83,18 @@ Content-Type: application/json
 {
   "product": 1,
   "taxNumber": "IT12345678900",
-  "couponCode": "D15",
+  "couponCode": "F10",
   "paymentProcessor": "paypal"
+}
+
+###
+POST http://127.0.0.1:8337/purchase
+Accept: application/json
+Content-Type: application/json
+
+{
+"product": 1,
+"taxNumber": "IT12345678900",
+"couponCode": "P20",
+"paymentProcessor": "paypal"
 }
