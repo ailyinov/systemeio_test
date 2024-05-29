@@ -2,13 +2,13 @@
 
 namespace App\Entity;
 
-use App\Repository\TaxIdRepository;
+use App\Repository\TaxRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: TaxIdRepository::class)]
+#[ORM\Entity(repositoryClass: TaxRepository::class)]
 #[ORM\HasLifecycleCallbacks]
-class TaxId
+class Tax
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]

@@ -4,7 +4,7 @@ namespace App\DataFixtures;
 
 use App\Entity\Coupon;
 use App\Entity\Product;
-use App\Entity\TaxId;
+use App\Entity\Tax;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 
@@ -70,28 +70,28 @@ class AppFixtures extends Fixture
          * FRYYXXXXXXXXX - Франция
          * где X - любая цифра от 0 до 9, Y - любая буква. Длина налогового номера различается в зависимости от страны.
          */
-        $t1 = new TaxId();
+        $t1 = new Tax();
         $t1->setCountryCode('DE')
             ->setPercent(19)
             ->setFormat('\d{9}')
         ;
         $manager->persist($t1);
 
-        $t2 = new TaxId();
+        $t2 = new Tax();
         $t2->setCountryCode('IT')
             ->setPercent(22)
             ->setFormat('\d{11}')
         ;
         $manager->persist($t2);
 
-        $t3 = new TaxId();
+        $t3 = new Tax();
         $t3->setCountryCode('FR')
             ->setPercent(20)
             ->setFormat('[a-zA-Z]{2}\d{9}')
         ;
         $manager->persist($t3);
 
-        $t4 = new TaxId();
+        $t4 = new Tax();
         $t4->setCountryCode('GR')
             ->setPercent(24)
             ->setFormat('\d{9}')

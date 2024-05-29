@@ -4,16 +4,19 @@ namespace App\Dto;
 
 use App\Validator\CouponExists;
 use App\Validator\ProductExists;
+use App\Validator\Tax;
 use Symfony\Component\Validator\Constraints as Assert;
 
 class CalculatePriceDto
 {
     public function __construct(
         #[Assert\GreaterThanOrEqual(1)]
+        #[Assert\NotBlank]
         #[ProductExists]
         public readonly int $product,
 
         #[Assert\NotBlank]
+        #[Tax]
         public readonly string $taxNumber,
 
         #[Assert\NotBlank]
@@ -21,9 +24,4 @@ class CalculatePriceDto
         public readonly string $couponCode,
     ) {
     }
-    /*
-     * Any public properties become valid options for the annotation.
-     * Then, use these in your validator class.
-     */
-    public $message = 'The value "{{ value }}" is not valid.';
 }
