@@ -1,5 +1,11 @@
 # Написать Symfony REST-приложение для расчета цены продукта и проведения оплаты
 
+### RUN:
+ * make init
+ * bin/console doctrine:migrations:migrate
+ * bin/console doctrine:fixtures:load
+
+
 Необходимо реализовать 2 эндпоинта:
 1. POST: для расчёта цены
 

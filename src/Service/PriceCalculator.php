@@ -35,7 +35,7 @@ class PriceCalculator
         $price = $product->getPrice();
         if ($coupon !== null) {
             $discount = $coupon->getIsPercent() ? $coupon->getDiscount() / 100 * $price: $coupon->getDiscount();
-            $price -= $discount;
+            $price -= $discount; // @TODO handle negative price )
         }
         $price += $price * ($tax->getPercent() / 100);
 
