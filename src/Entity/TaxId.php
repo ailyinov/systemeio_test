@@ -7,6 +7,7 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: TaxIdRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class TaxId
 {
     #[ORM\Id]
@@ -16,6 +17,9 @@ class TaxId
 
     #[ORM\Column(length: 255)]
     private string $country_code;
+
+    #[ORM\Column]
+    private int $percent;
 
     #[ORM\Column(length: 255)]
     private string $format;
@@ -82,6 +86,31 @@ class TaxId
     public function setCreated(\DateTimeInterface $created): static
     {
         $this->created = $created;
+
+        return $this;
+    }
+
+    #[ORM\PreUpdate]
+    public function onPreUpdate(): void
+    {
+        $this->updated = new \DateTime("now");
+    }
+
+    #[ORM\PrePersist]
+    public function onPrePersist(): void
+    {
+        $this->created = new \DateTime("now");
+        $this->onPreUpdate();
+    }
+
+    public function getPercent(): int
+    {
+        return $this->percent;
+    }
+
+    public function setPercent(int $percent): static
+    {
+        $this->percent = $percent;
 
         return $this;
     }

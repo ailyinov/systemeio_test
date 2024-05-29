@@ -8,6 +8,7 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ProductRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class Product
 {
     #[ORM\Id]
@@ -20,9 +21,6 @@ class Product
 
     #[ORM\Column]
     private float $price;
-
-    #[ORM\Column(length: 255)]
-    private string $currency;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private DateTime $updated;
@@ -69,26 +67,16 @@ class Product
         return $this;
     }
 
-    public function getCurrency(): string
-    {
-        return $this->currency;
-    }
-
-    public function setCurrency(string $currency): static
-    {
-        $this->currency = $currency;
-
-        return $this;
-    }
-
     public function getUpdated(): DateTime
     {
         return $this->updated;
     }
 
-    public function setUpdated(): void
+    public function setUpdated(): static
     {
         $this->updated = new DateTime("now");
+
+        return $this;
     }
 
     public function getCreated(): DateTime
@@ -99,5 +87,18 @@ class Product
     public function setCreated(DateTime $created): void
     {
         $this->created = $created;
+    }
+
+    #[ORM\PreUpdate]
+    public function onPreUpdate(): void
+    {
+        $this->updated = new \DateTime("now");
+    }
+
+    #[ORM\PrePersist]
+    public function onPrePersist(): void
+    {
+        $this->created = new \DateTime("now");
+        $this->onPreUpdate();
     }
 }

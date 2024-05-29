@@ -21,7 +21,7 @@ final class Version20240529075105 extends AbstractMigration
     {
         // this up() migration is auto-generated, please modify it to your needs
         $this->addSql('CREATE SEQUENCE tax_id_id_seq INCREMENT BY 1 MINVALUE 1 START 1');
-        $this->addSql('CREATE TABLE tax_id (id INT NOT NULL, country_code VARCHAR(255) NOT NULL, format VARCHAR(255) NOT NULL, updated TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, created TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, PRIMARY KEY(id))');
+        $this->addSql('CREATE TABLE tax_id (id INT NOT NULL, country_code VARCHAR(255) NOT NULL, percent INTEGER, format VARCHAR(255) NOT NULL, updated TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, created TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL DEFAULT NOW(), PRIMARY KEY(id))');
     }
 
     public function down(Schema $schema): void

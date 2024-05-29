@@ -7,8 +7,11 @@ use DateTime;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
+/**
+ * Assuming that coupon can be applied on any product
+ */
 #[ORM\Entity(repositoryClass: CouponRepository::class)]
-#[ORM\Table('public.coupon')]
+#[ORM\HasLifecycleCallbacks]
 class Coupon
 {
     #[ORM\Id]
@@ -97,5 +100,18 @@ class Coupon
     public function setCreated(DateTime $created): void
     {
         $this->created = $created;
+    }
+
+    #[ORM\PreUpdate]
+    public function onPreUpdate(): void
+    {
+        $this->updated = new \DateTime("now");
+    }
+
+    #[ORM\PrePersist]
+    public function onPrePersist(): void
+    {
+        $this->created = new \DateTime("now");
+        $this->onPreUpdate();
     }
 }
