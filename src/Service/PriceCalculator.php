@@ -20,16 +20,25 @@ class PriceCalculator
     {
     }
 
-    public function calculate(CalculatePriceDto $calculatePriceDto): void
+    public function calculate(CalculatePriceDto $calculatePriceDto): float
     {
         /** @var Product $product */
         $product = $this->productRepository->find($calculatePriceDto->getProduct());
         /** @var Coupon $coupon */
-        $coupon = $this->couponRepository->findOneBy(['code' => $calculatePriceDto->getCouponCode()]);
+        $coupon = null;
+        if ($calculatePriceDto->getCouponCode() !== null) {
+            $coupon = $this->couponRepository->findOneBy(['code' => $calculatePriceDto->getCouponCode()]);
+        }
         /** @var Tax $tax */
         $tax = $this->taxRepository->findOneBy(['country_code' => $calculatePriceDto->taxCountryCode()]);
-        if ($tax !== null) {
 
+        $price = $product->getPrice();
+        if ($coupon !== null) {
+            $discount = $coupon->getIsPercent() ? $coupon->getDiscount() / $price * 100 : $coupon->getDiscount();
+            $price -= $discount;
         }
+        $price += $price * ($tax->getPercent() / 100);
+
+        return $price;
     }
 }
