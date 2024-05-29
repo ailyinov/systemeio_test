@@ -29,7 +29,7 @@ class TaxValidator extends ConstraintValidator
         /** @var \App\Entity\Tax $tax */
         $tax = $this->taxRepository->findOneBy(['country_code' => $this->taxCountryCode()]);
         if ($tax !== null) {
-            if (preg_match("/{$tax->getFormat()}/", substr($value, 2,))) {
+            if (preg_match("/^{$tax->getFormat()}$/", substr($value, 2,))) {
                 return;
             }
         }
