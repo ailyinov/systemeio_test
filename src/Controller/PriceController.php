@@ -2,36 +2,32 @@
 
 namespace App\Controller;
 
-use App\Validator\CalculatePrice;
+use App\Dto\CalculatePriceDto;
+use App\Entity\Coupon;
+use App\Service\PurchaseProcessor;
+use App\Service\PriceCalculator;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\HttpKernel\Attribute\MapRequestPayload;
+use Symfony\Component\Routing\Attribute\Route;
 
 class PriceController extends AbstractController
 {
     #[Route('/calculate-price', name: 'app_price_calc', methods: ['POST'])]
-    public function calculate(#[MapRequestPayload] CalculatePrice $calculatePrice,): JsonResponse
+    public function calculate(#[MapRequestPayload] CalculatePriceDto $calculatePriceDto, PriceCalculator $priceCalculator): JsonResponse
     {
+        $priceCalculator->calculate($calculatePriceDto);
         return $this->json([
-            'message' => 'Welcome to your new controller!',
-            'path' => 'src/Controller/PriceController.php',
+            'success' => 'ok'
         ]);
     }
 
-    #[Route('/purchase', name: 'app_price_purchase', methods: ['POST'])]
-    public function purchase(): JsonResponse
-    {
-        return $this->json([
-            'message' => 'Welcome to your new controller!',
-            'path' => 'src/Controller/PriceController.php',
-        ]);
-    }
-
-    public static function getSubscribedServices(): array
-    {
-        return [
-
-        ];
-    }
+//    #[Route('/purchase', name: 'app_price_purchase', methods: ['POST'])]
+//    public function purchase(#[MapRequestPayload] CalculatePriceDto $calculatePriceDto, PurchaseProcessor $purchaseProcessor): JsonResponse
+//    {
+//        return $this->json([
+//            'success' => 'ok'
+//        ]);
+//    }
 }

@@ -21,8 +21,8 @@ class CouponExistsValidator extends ConstraintValidator
             return;
         }
 
-        $product = $this->couponRepository->findOneBy(['code' => $value]);
-        if ($product !== null) {
+        $coupon = $this->couponRepository->findOneBy(['code' => $value]);
+        if ($coupon !== null) {
             return;
         }
 

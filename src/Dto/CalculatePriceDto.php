@@ -9,19 +9,37 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 class CalculatePriceDto
 {
+    use TaxCountryCodeTrait;
+
     public function __construct(
         #[Assert\GreaterThanOrEqual(1)]
         #[Assert\NotBlank]
         #[ProductExists]
-        public readonly int $product,
+        private readonly int    $product,
 
         #[Assert\NotBlank]
         #[Tax]
-        public readonly string $taxNumber,
+        private readonly string $taxNumber,
 
         #[Assert\NotBlank]
         #[CouponExists]
-        public readonly string $couponCode,
-    ) {
+        private readonly string $couponCode,
+    )
+    {
+    }
+
+    public function getProduct(): int
+    {
+        return $this->product;
+    }
+
+    public function getTaxNumber(): string
+    {
+        return $this->taxNumber;
+    }
+
+    public function getCouponCode(): string
+    {
+        return $this->couponCode;
     }
 }
